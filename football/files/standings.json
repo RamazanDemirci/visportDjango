@@ -1,0 +1,115 @@
+{
+    "season": {
+        "id": 4,
+        "startDate": "2017-08-11T19:00:00Z",
+        "endDate": "2018-05-20T16:45:00Z",
+        "currentMatchday": 34
+    },
+    "filters": {},
+    "standings": [
+        {
+            "stage": "REGULAR_SEASON",
+            "type": "TOTAL",
+            "group": null,
+            "table": [
+                {
+                    "position": 1,
+                    "team": {
+                        "id": 674,
+                        "name": "PSV",
+                        "crestURI": null
+                    },
+                    "playedGames": 34,
+                    "won": 26,
+                    "draw": 5,
+                    "lost": 3,
+                    "points": 83,
+                    "goalsFor": 87,
+                    "goalsAgainst": 39,
+                    "goalDifference": 48
+                },
+                {
+                    "position": 2,
+                    "team": {
+                        "id": 678,
+                        "name": "AFC Ajax",
+                        "crestURI": null
+                    },
+                    "playedGames": 34,
+                    "won": 25,
+                    "draw": 4,
+                    "lost": 5,
+                    "points": 79,
+                    "goalsFor": 89,
+                    "goalsAgainst": 33,
+                    "goalDifference": 56
+                },
+                {
+                    "position": 3,
+                    "team": {
+                        "id": 682,
+                        "name": "AZ",
+                        "crestURI": null
+                    },
+                    "playedGames": 34,
+                    "won": 22,
+                    "draw": 5,
+                    "lost": 7,
+                    "points": 71,
+                    "goalsFor": 72,
+                    "goalsAgainst": 38,
+                    "goalDifference": 34
+                },
+                { ... another rank ... },
+            ]
+        },
+        {
+            "stage": "REGULAR_SEASON",
+            "type": "HOME",
+            "group": null,
+            "table": [
+                {
+                    "position": 1,
+                    "team": {
+                        "id": 674,
+                        "name": "PSV",
+                        "crestURI": null
+                    },
+                    "playedGames": 17,
+                    "won": 15,
+                    "draw": 2,
+                    "lost": 0,
+                    "points": 47,
+                    "goalsFor": 44,
+                    "goalsAgainst": 9,
+                    "goalDifference": 35
+                },
+                { ... another rank ... }
+            ]
+        },
+        {
+            "stage": "REGULAR_SEASON",
+            "type": "AWAY",
+            "group": null,
+            "table": [
+                {
+                    "position": 1,
+                    "team": {
+                        "id": 678,
+                        "name": "AFC Ajax",
+                        "crestURI": null
+                    },
+                    "playedGames": 17,
+                    "won": 11,
+                    "draw": 3,
+                    "lost": 3,
+                    "points": 36,
+                    "goalsFor": 44,
+                    "goalsAgainst": 21,
+                    "goalDifference": 23
+                },
+                { ... another rank ... }                
+            ]
+        }
+    ]
+}
