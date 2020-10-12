@@ -1,0 +1,46 @@
+version: "3.1"
+
+services:
+  mongodb:
+    image: mongo:3.0.2
+
+  web:
+    image: app
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/home/user/app/
+    links:
+      - mongodb
+    depends_on:
+      - migration
+
+  migration:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: app
+    command: python manage.py migrate
+    volumes:
+      - .:/home/user/app/
+    links:
+      - mongodb
+    depends_on:
+      - make_migrations
+
+  make_migrations:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: app
+    command: python manage.py makemigrations
+    volumes:
+      - .:/home/user/app/
+    links:
+      - mongodb
+    depends_on:
+      - mongodb

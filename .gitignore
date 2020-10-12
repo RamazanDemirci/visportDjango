@@ -1,4 +1,52 @@
-\.venv
-\.vscode
-Pipfile.lock
-db.sqlite3
+*.pyc
+/backend/db.sqlite3
+.DS_Store
+.env
+*/settings/local.py
+/staticfiles/*
+/mediafiles/*
+__pycache__/
+/.vscode/
+/.db/
+
+#local
+.db/
+
+# coverage result
+.coverage
+/coverage/
+
+# pycharm
+.idea/
+
+# data
+*.dump
+
+# npm
+node_modules/
+npm-debug.log
+
+# Webpack
+/frontend/bundles/*
+/frontend/webpack_bundles/*
+/webpack-stats.json
+/jquery-webpack-stats.json
+
+# Sass
+.sass-cache
+*.map
+
+# General
+/memoirem-venv/
+/venv/
+/env/
+/output/
+/cache/
+boilerplate.zip
+
+# Spritesmith
+spritesmith-generated/
+spritesmith.scss
+
+# templated email
+tmp_email/
