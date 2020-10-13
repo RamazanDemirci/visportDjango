@@ -1,46 +1,23 @@
-version: "3.1"
+version: "3.7"
 
 services:
-  mongodb:
-    image: mongo:3.0.2
-
   web:
-    image: app
-    restart: always
-    build:
-      dockerfile: Dockerfile
-      context: .
+    build: ./sport_api
+    command: python manage.py runserver 0.0.0.0:8888
+    volumes:
+      - ./sport_api/:/usr/src/sport_api/
     ports:
-      - "9000:9000"
-    volumes:
-      - .:/home/user/app/
-    links:
-      - mongodb
+      - 8888:8888
+    env_file:
+      - ./.env.dev
     depends_on:
-      - migration
+      - mongodb
+  mongodb:
+    image: mongo
+    #volumes:
+    #  - ./data-db:/data/db
+    ports:
+      - 27017:27017
 
-  migration:
-    build:
-      dockerfile: Dockerfile
-      context: .
-    image: app
-    command: python manage.py migrate
-    volumes:
-      - .:/home/user/app/
-    links:
-      - mongodb
-    depends_on:
-      - make_migrations
-
-  make_migrations:
-    build:
-      dockerfile: Dockerfile
-      context: .
-    image: app
-    command: python manage.py makemigrations
-    volumes:
-      - .:/home/user/app/
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
+volumes:
+  postgres_data:
