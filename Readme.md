@@ -53,3 +53,5 @@ https://www.flashscore.com
 mongodump --host localhost -d football --port 27017 --out c:/mongoDump
 
 mongorestore --host localhost -d football --port 27017 ./data/db
+
+mongorestore --host localhost -d football --port 27017 ./data/backup

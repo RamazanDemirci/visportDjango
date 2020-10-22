@@ -11,7 +11,7 @@ __pycache__/
 
 #local
 .db/
-/data-db/
+/mongo/
 /sport_api/static/
 
 # coverage result

@@ -197,7 +197,6 @@ def match_exist(request):
 @api_view(['GET', 'POST', 'DELETE'])
 def matches(request):
     if request.method == 'GET':
-        return JsonResponse("{'deee':'1245dd'}", status=status.HTTP_200_OK)
         league = request.data['league']
         season = request.data['season']
         week = request.data['week']
@@ -206,9 +205,10 @@ def matches(request):
             league__contains=league).filter(season__contains=season).filter(week__contains=week)
 
         matches_serializer = MatchSerializer(matches, many=True)
-
+        print("test")
+        print("matches_serializer.data : ", matches_serializer)
         response = matches_serializer.data
-
+        print("4")
         return JsonResponse(response, safe=False)
 
     elif request.method == 'POST':

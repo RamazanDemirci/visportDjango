@@ -42,10 +42,10 @@ class MissedPenaltiesSerializer(serializers.ModelSerializer):
 
 class HostSerializer(serializers.ModelSerializer):
     goals = GoalSerializer(many=True)
-    #cards = CardSerializer(many=True)
-    #changes_in = ChangeSerializer(many=True)
-    #changes_out = ChangeSerializer(many=True)
-    #players = PlayerSerializer(many=True)
+    cards = CardSerializer(many=True)
+    changes_in = ChangeSerializer(many=True)
+    changes_out = ChangeSerializer(many=True)
+    players = PlayerSerializer(many=True)
 
     class Meta:
         model = Host
@@ -54,8 +54,8 @@ class HostSerializer(serializers.ModelSerializer):
 
 class MatchSerializer(serializers.ModelSerializer):
     host = HostSerializer(many=False)
-    #guest = HostSerializer(many=False)
-    #missed_penalties = MissedPenaltiesSerializer(many=False)
+    guest = HostSerializer(many=False)
+    missed_penalties = MissedPenaltiesSerializer(many=False)
 
     class Meta:
         model = Match

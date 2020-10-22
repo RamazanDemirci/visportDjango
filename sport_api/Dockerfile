@@ -15,10 +15,10 @@ COPY ./requirements.txt /usr/src/sport_api/requirements.txt
 RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
-#COPY ./entrypoint.sh /usr/src/sport_api/entrypoint.sh
+COPY ./entrypoint.sh /usr/src/sport_api/entrypoint.sh
 
 # copy project
 COPY . /usr/src/sport_api/
 
 # run entrypoint.sh
-#ENTRYPOINT ["/usr/src/sport_api/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/sport_api/entrypoint.sh"]
