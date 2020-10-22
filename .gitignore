@@ -11,6 +11,8 @@ __pycache__/
 
 #local
 .db/
+/data-db/
+/sport_api/static/
 
 # coverage result
 .coverage
@@ -50,3 +52,5 @@ spritesmith.scss
 
 # templated email
 tmp_email/
+sport_api/football/migrations/0001_initial.py
+Pipfile.lock

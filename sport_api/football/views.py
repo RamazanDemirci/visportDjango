@@ -197,6 +197,7 @@ def match_exist(request):
 @api_view(['GET', 'POST', 'DELETE'])
 def matches(request):
     if request.method == 'GET':
+        return JsonResponse("{'deee':'1245dd'}", status=status.HTTP_200_OK)
         league = request.data['league']
         season = request.data['season']
         week = request.data['week']

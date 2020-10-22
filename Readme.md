@@ -47,3 +47,9 @@ refs :
 https://www.tff.org
 https://www.mackolik.com
 https://www.flashscore.com
+
+# mongo dump - restore
+
+mongodump --host localhost -d football --port 27017 --out c:/mongoDump
+
+mongorestore --host localhost -d football --port 27017 ./data/db

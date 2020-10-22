@@ -20,12 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "a@jvq1zvnqd7&=-zcnuheb&#n34ip(5@guc%&eh+byate^@r$j")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
 
 
 # Application definition
@@ -37,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'football'
+    'rest_framework',
+    'football',
+
 ]
 
 MIDDLEWARE = [
@@ -89,8 +92,12 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get("NOSQL_ENGINE", "djongo"),
         'NAME': os.environ.get("NOSQL_NAME", "football"),
-        'HOST': os.environ.get("NOSQL_HOST", "mongodb"),
-        'ENFORCE_SCHEMA': os.environ.get("NOSQL_ENFORCE_SCHEMA", True)
+        # 'HOST': os.environ.get("NOSQL_HOST", "127.0.0.1"),
+        'CLIENT': {
+            'host': 'mongo',
+            'port': 27017,
+        }
+        # 'ENFORCE_SCHEMA': os.environ.get("NOSQL_ENFORCE_SCHEMA", False)
     }
 }
 
