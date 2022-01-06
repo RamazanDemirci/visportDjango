@@ -55,7 +55,7 @@ class HostSerializer(serializers.ModelSerializer):
 class MatchSerializer(serializers.ModelSerializer):
     host = HostSerializer(many=False)
     guest = HostSerializer(many=False)
-    missed_penalties = MissedPenaltiesSerializer(many=False)
+    missed_penalties = MissedPenaltiesSerializer(many=True)
 
     class Meta:
         model = Match

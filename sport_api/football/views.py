@@ -19,22 +19,14 @@ from django.core.files.storage import FileSystemStorage
 @api_view(['GET', 'POST', 'DELETE'])
 def leagues(request):
     if request.method == 'GET':
-        # inner_query = Player.objects.filter(name__contains='Ch').values('name')
-        # entries = Entry.objects.filter(blog__name__in=inner_query)
-        name = request.data['name']
-        # inner_query = Person.objects.filter(name=name).configure(
-        #    cursor_type=CursorType.TAILABLE).iterator()
+        print('GET')
+        leagues = League.objects.all()
+        league_serializer = LeagueSerializer(leagues, many=True)
+        if league_serializer.data != None:
+            response = league_serializer.data
+            return JsonResponse(response, status=status.HTTP_200_OK, safe=False)
 
-        # data = Person.find_one({'name': 'Fernando Andrade Dos Santos'})
-
-        inner_query = League.objects.filter(
-            name__contains=name).values('name', 'alias', 'country', 'country_code')
-
-        data = inner_query.first()
-        if(data != None):
-            return JsonResponse(data, status=status.HTTP_200_OK)
         return JsonResponse({"status": "Resource not Found"}, status=status.HTTP_400_BAD_REQUEST)
-        # entries = Person.objects.filter(name__in=inner_query)
     elif request.method == 'POST':
         print("POST")
         league_data = JSONParser().parse(request)
@@ -48,12 +40,15 @@ def leagues(request):
 @api_view(['GET', 'POST', 'DELETE'])
 def seasons(request):
     if request.method == 'GET':
-        name = request.data['name']
-        inner_query = Season.objects.filter(
-            name__contains=name).values('name', 'alias', 'league', 'year')
-        data = inner_query.first()
-        if(data != None):
-            return JsonResponse(data, status=status.HTTP_200_OK)
+        print('GET')
+        league = request.query_params.get('league')
+        seasons = Season.objects.all().filter(league=league)
+        print(seasons)
+        season_serializer = SeasonSerializer(seasons, many=True)
+        if season_serializer.data != None:
+            response = season_serializer.data
+            return JsonResponse(response, status=status.HTTP_200_OK, safe=False)
+
         return JsonResponse({"status": "Resource not Found"}, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'POST':
         print("POST")
@@ -144,9 +139,9 @@ def logos(request):
         parent_directory = os.path.split(dirname)[0]
         filepath = os.path.join(parent_directory, 'media', f'{filename}.png')
 
-        #filepath = Path(f"../media/{filename}.png")
+        # filepath = Path(f"../media/{filename}.png")
 
-        #filepath = f'D:/Google Drive/Tutorials/Python/RestApi/DjangoApi/visport{settings.MEDIA_URL}{filename}.png'
+        # filepath = f'D:/Google Drive/Tutorials/Python/RestApi/DjangoApi/visport{settings.MEDIA_URL}{filename}.png'
         with open(filepath, 'rb') as f:
             data = f.read()
         if data is not None:
@@ -194,21 +189,40 @@ def match_exist(request):
         # entries = Person.objects.filter(name__in=inner_query)
 
 
-@api_view(['GET', 'POST', 'DELETE'])
-def matches(request):
+@api_view(['GET'])
+def matchByHost(request):
     if request.method == 'GET':
-        league = request.data['league']
-        season = request.data['season']
-        week = request.data['week']
+        print("GET3")
+        league = request.query_params.get('league')
+        season = request.query_params.get('season')
+        week = request.query_params.get('week')
+        host = request.query_params.get('host')
 
         matches = Match.objects.all().filter(
-            league__contains=league).filter(season__contains=season).filter(week__contains=week)
+            league=league).filter(season=season).filter(week=week)
+        match_data = None
+        for i in range(len(matches)):
+            if(matches[i].host['name'] == host):
+                match_data = matches[i]
+                break
+        matches_serializer = MatchSerializer(match_data, many=False)
+        response = matches_serializer.data
+        return JsonResponse(response, safe=False)
+
+
+@ api_view(['GET', 'POST', 'DELETE'])
+def matches(request):
+    if request.method == 'GET':
+        league = request.query_params.get('league')
+        season = request.query_params.get('season')
+        week = request.query_params.get('week')
+
+        matches = Match.objects.all().filter(league=league).filter(
+            season=season).filter(week=week).filter(week=host).filter(week=guest)
 
         matches_serializer = MatchSerializer(matches, many=True)
-        print("test")
-        print("matches_serializer.data : ", matches_serializer)
+
         response = matches_serializer.data
-        print("4")
         return JsonResponse(response, safe=False)
 
     elif request.method == 'POST':
@@ -221,15 +235,15 @@ def matches(request):
         return JsonResponse(matches_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
 def fixture(request):
     if request.method == 'GET':
-        league = request.data['league']
-        season = request.data['season']
-        week = request.data['week']
+        league = request.query_params.get('league')
+        season = request.query_params.get('season')
+        week = request.query_params.get('week')
 
         matches = Match.objects.all().filter(
-            league__contains=league).filter(season__contains=season).filter(week__contains=week)
+            league=league).filter(season=season).filter(week=week)
         print(matches)
         fixture_serializer = FixtureSerializer(
             matches, many=True)
@@ -244,7 +258,7 @@ def fixture(request):
         return JsonResponse(fixture_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'POST', 'DELETE'])
+@ api_view(['GET', 'POST', 'DELETE'])
 def standing_all(request):
     if request.method == 'GET':
         league = request.data['league']
@@ -260,15 +274,19 @@ def standing_all(request):
         return JsonResponse(standing_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'POST', 'DELETE'])
+@ api_view(['GET', 'POST', 'DELETE'])
 def standing(request):
     if request.method == 'GET':
-        league = request.data['league']
-        season = request.data['season']
-        week = request.data['week']
+        # league = request.data['league']
+        # season = request.data['season']
+        # week = request.data['week']
+
+        league = request.query_params.get('league')
+        season = request.query_params.get('season')
+        week = request.query_params.get('week')
 
         standing = Standing.objects.all().filter(
-            league__contains=league).filter(season__contains=season).filter(week__contains=week)
+            league=league).filter(season=season).filter(week=week)
 
         standing_serializer = StandingSerializer(standing, many=True)
         if standing_serializer.data != None:

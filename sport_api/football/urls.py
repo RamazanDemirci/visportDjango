@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^api/standing_all$', views.standing_all),
     url(r'^api/fixture$', views.fixture),
     url(r'^api/match_exist$', views.match_exist),
+    url(r'^api/matchByHost$', views.matchByHost),
 
     #url(r'^api/tutorials/(?P<pk>[0-9]+)$', views.tutorial_detail),
     #url(r'^api/tutorials/published$', views.tutorial_list_published)
