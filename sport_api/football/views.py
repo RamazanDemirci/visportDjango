@@ -234,6 +234,12 @@ def matches(request):
             return JsonResponse(matches_serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(matches_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+def getLeagueAliasByName(m_name):
+    league_item = League.objects.all().filter(name=m_name).first()
+    league_serializer = LeagueSerializer(league_item, many=False)
+    if league_serializer.data != None:
+        return league_serializer.data['alias']
+    else: return None
 
 @ api_view(['GET'])
 def fixture(request):
@@ -242,19 +248,21 @@ def fixture(request):
         season = request.query_params.get('season')
         week = request.query_params.get('week')
 
-        matches = Match.objects.all().filter(
-            league=league).filter(season=season).filter(week=week)
-        print(matches)
-        fixture_serializer = FixtureSerializer(
-            matches, many=True)
-        if fixture_serializer.data != None:
-            response = {
-                'league': league,
-                'season': season,
-                'week': week,
-                'matches': fixture_serializer.data
-            }
-            return JsonResponse(response, safe=False)
+        
+
+        league_alias = getLeagueAliasByName(league);
+        if league_alias != None:
+            matches = Match.objects.all().filter(league=league_alias).filter(season=season).filter(week=week)
+            print(matches)
+            fixture_serializer = FixtureSerializer(matches, many=True)
+            if fixture_serializer.data != None:
+                response = {
+                    'league': league_alias,
+                    'season': season,
+                    'week': week,
+                    'matches': fixture_serializer.data
+                }
+                return JsonResponse(response, safe=False)
         return JsonResponse(fixture_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

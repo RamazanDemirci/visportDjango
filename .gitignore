@@ -11,9 +11,10 @@ __pycache__/
 
 #local
 .db/
+/data/
 /mongo/
 /sport_api/static/
-
+/sport_api/media/
 # coverage result
 .coverage
 /coverage/

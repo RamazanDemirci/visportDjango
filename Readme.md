@@ -55,3 +55,18 @@ mongodump --host localhost -d football --port 27017 --out c:/mongoDump
 mongorestore --host localhost -d football --port 27017 ./data/db
 
 mongorestore --host localhost -d football --port 27017 ./data/backup
+
+
+# mongo query notes
+
+- updateMany aggregation
+'''
+    db.football_match.updateMany(     
+      {"guest.name":'Çaykur Rizespor'},      
+      {$set: {"guest.name": 'Rizespor'}} 
+    )
+'''
+- find
+'''
+    db.football_match.find({"host.name":'Çaykur Rizespor'})
+'''
