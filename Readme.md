@@ -70,3 +70,34 @@ mongorestore --host localhost -d football --port 27017 ./data/backup
 '''
     db.football_match.find({"host.name":'Çaykur Rizespor'})
 '''
+
+db.football_season.find({"league":'superlig'})
+
+
+db.football_season.updateMany(     
+      {"league":'superlig'},      
+      {$set: {"league": 'Süper Lig'}} 
+    )
+
+db.football_season.updateMany(     
+      {"league":'superlig'},      
+      {$set: {"league": 'Süper Lig'}} 
+    )
+    
+- update in array object field
+db.football_standing.updateMany(     
+      {"detail.team":'Çaykur Rizespor'},      
+      {$set: {"detail.$.team": 'Rizespor'}} 
+    )
+
+db.football_standing.updateMany(     
+      {"detail.team":'F. Karamgümrük'},      
+      {$set: {"detail.$.team": 'Fatih Karagümrük'}} 
+    )
+
+db.football_match.find({"guest.name":'Mke Ankaragücü'})
+
+db.football_match.updateMany(     
+      {"host.name":'Yeni Malatyaspor'},      
+      {$set: {"host.name": 'Malatyaspor'}} 
+    )

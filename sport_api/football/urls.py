@@ -1,7 +1,11 @@
 from django.conf.urls import url
 from . import views 
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
+    
     url(r'^api/matches$', views.matches),
     url(r'^api/persons$', views.persons),
     url(r'^api/upload/logo$', views.logos),
@@ -14,6 +18,7 @@ urlpatterns = [
     url(r'^api/fixture$', views.fixture),
     url(r'^api/match_exist$', views.match_exist),
     url(r'^api/matchByHost$', views.matchByHost),
+    url(r'^$', schema_view),
 
     #url(r'^api/tutorials/(?P<pk>[0-9]+)$', views.tutorial_detail),
     #url(r'^api/tutorials/published$', views.tutorial_list_published)

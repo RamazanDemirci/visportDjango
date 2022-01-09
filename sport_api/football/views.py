@@ -16,6 +16,12 @@ from rest_framework.decorators import api_view
 from django.core.files.storage import FileSystemStorage
 
 
+
+
+
+
+
+
 @api_view(['GET', 'POST', 'DELETE'])
 def leagues(request):
     if request.method == 'GET':
@@ -241,6 +247,15 @@ def getLeagueAliasByName(m_name):
         return league_serializer.data['alias']
     else: return None
 
+@api_view(['GET', 'POST'])
+def image_view(request,  school_id, size):
+    if request.method == 'GET':
+        image = School.objects.get(school__pk=school_id).image
+        resized_img = image #Handle resizing here
+
+        return HttpResponse(resized_img, content_type="image/png")
+    return JsonResponse(fixture_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @ api_view(['GET'])
 def fixture(request):
     if request.method == 'GET':
@@ -250,7 +265,8 @@ def fixture(request):
 
         
 
-        league_alias = getLeagueAliasByName(league);
+        #league_alias = getLeagueAliasByName(league);
+        league_alias = league
         if league_alias != None:
             matches = Match.objects.all().filter(league=league_alias).filter(season=season).filter(week=week)
             print(matches)
