@@ -5,7 +5,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.shortcuts import render
 
-from django.http.response import JsonResponse, HttpResponse
+from django.http.response import Http404, JsonResponse, HttpResponse
+from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
@@ -15,32 +16,43 @@ from rest_framework.decorators import api_view
 
 from django.core.files.storage import FileSystemStorage
 
+from django.shortcuts import get_object_or_404
 
 
+def get_obj_or_404(klass, *args, **kwargs):
+    try:
+        return klass.objects.get(*args, **kwargs)
+    except klass.DoesNotExist:
+        raise Http404
 
-
-
-
-
-@api_view(['GET', 'POST', 'DELETE'])
-def leagues(request):
+@api_view(['GET', 'POST'])
+def league_list(request):
     if request.method == 'GET':
-        print('GET')
-        leagues = League.objects.all()
-        league_serializer = LeagueSerializer(leagues, many=True)
-        if league_serializer.data != None:
-            response = league_serializer.data
-            return JsonResponse(response, status=status.HTTP_200_OK, safe=False)
-
-        return JsonResponse({"status": "Resource not Found"}, status=status.HTTP_400_BAD_REQUEST)
+        items = League.objects.all()
+        serializer = LeagueSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'POST':
-        print("POST")
-        league_data = JSONParser().parse(request)
-        league_serializer = LeagueSerializer(data=league_data)
-        if league_serializer.is_valid():
-            league_serializer.save()
-            return JsonResponse(league_serializer.data, status=status.HTTP_201_CREATED)
-        return JsonResponse(league_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = LeagueSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def league_detail(request, pk):
+    item = get_obj_or_404(League, name=pk)
+    if request.method == 'GET':
+        serializer = LeagueSerializer(instance=item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        serializer = LeagueSerializer(instance=item, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    if request.method == 'DELETE':
+        item.delete()
+        return Response({'msg': 'done'}, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'POST', 'DELETE'])

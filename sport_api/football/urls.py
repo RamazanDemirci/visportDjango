@@ -5,12 +5,13 @@ from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
-    
-    url(r'^api/matches$', views.matches),
+    url(r'^api/leagues$', views.league_list, name='league_list'),
+    url(r'^api/league/(?P<pk>\w+)$', views.league_detail, name='league_detail'),
+    url(r'^api/matches$', views.matches), 
     url(r'^api/persons$', views.persons),
     url(r'^api/upload/logo$', views.logos),
     url(r'^api/download/logo$', views.logos),
-    url(r'^api/leagues$', views.leagues),
+    
     url(r'^api/seasons$', views.seasons),
     url(r'^api/teams$', views.teams),
     url(r'^api/standing$', views.standing),

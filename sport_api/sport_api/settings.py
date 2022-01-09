@@ -29,6 +29,7 @@ DEBUG = int(os.environ.get("DEBUG", default=1))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(" ")
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -89,18 +90,34 @@ WSGI_APPLICATION = 'sport_api.wsgi.application'
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #    }
 # }
-
 DATABASES = {
     # 'default': {
     #    'ENGINE': 'django.db.backends.sqlite3',
     #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # },
+   
+
     'default': {
         'ENGINE': os.environ.get("NOSQL_ENGINE", "djongo"),
         'NAME': os.environ.get("NOSQL_NAME", "football"),
         # 'HOST': os.environ.get("NOSQL_HOST", "127.0.0.1"),
         'CLIENT': {
-            'host': 'mongo',
+            'host': os.environ.get("NOSQL_HOST", "localhost"),
+            'port': 27017,
+        },
+        'TEST': {
+            'NAME': os.environ.get("NOSQL_NAME", "football_test"),
+            'HOST': 'localhost',
+        }
+        # 'ENFORCE_SCHEMA': os.environ.get("NOSQL_ENFORCE_SCHEMA", False)
+    },
+
+    'test': {
+        'ENGINE': os.environ.get("NOSQL_ENGINE", "djongo"),
+        'NAME': os.environ.get("NOSQL_NAME", "football_test"),
+        # 'HOST': os.environ.get("NOSQL_HOST", "127.0.0.1"),
+        'CLIENT': {
+            'host': 'localhost',
             'port': 27017,
         }
         # 'ENFORCE_SCHEMA': os.environ.get("NOSQL_ENFORCE_SCHEMA", False)
