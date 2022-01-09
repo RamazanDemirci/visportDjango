@@ -5,6 +5,9 @@ jobs:
       - image: circleci/python:3.8.9
         environment: # environment variables for primary container
           PIPENV_VENV_IN_PROJECT: true
+
+      - image: circleci/mongo:latest
+        port: 27017:27017
     steps:
       - checkout
       - run: sudo chown -R circleci:circleci /usr/local/bin

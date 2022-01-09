@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8.6-alpine
+FROM python:3.8.9-alpine
 
 # set work directory
 WORKDIR /usr/src/sport_api
@@ -11,14 +11,14 @@ ENV PYTHONUNBUFFERED 1
 
 # install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements.txt /usr/src/sport_api/requirements.txt
+COPY ./requirements.txt /usr/src/requirements.txt
 RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
-COPY ./entrypoint.sh /usr/src/sport_api/entrypoint.sh
+COPY ./entrypoint.sh /usr/src/entrypoint.sh
 
 # copy project
-COPY . /usr/src/sport_api/
+COPY . /usr/src/
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/sport_api/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/entrypoint.sh"]

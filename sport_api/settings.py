@@ -102,7 +102,7 @@ DATABASES = {
         'NAME': os.environ.get("NOSQL_NAME", "football"),
         # 'HOST': os.environ.get("NOSQL_HOST", "127.0.0.1"),
         'CLIENT': {
-            'host': os.environ.get("NOSQL_HOST", "localhost"),
+            'host': os.environ.get("NOSQL_HOST", "mongo"),
             'port': 27017,
         },
         'TEST': {
