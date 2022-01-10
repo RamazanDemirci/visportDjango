@@ -1,8 +1,8 @@
 # pull official base image
-FROM python:3.8.9-alpine
+FROM python:3.8.9-slim
 
 # set work directory
-WORKDIR /usr/src/sport_api
+WORKDIR /usr/src
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1

@@ -11,14 +11,14 @@ services:
     restart: always
 
   web:
-    build: ./sport_api
+    build: ./
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./sport_api/:/usr/src/sport_api/
+      - ./:/usr/src/
     ports:
       - 8000:8000
     env_file:
-      - ./.env.dev
+      - .env.dev
     depends_on:
       - mongo
 
