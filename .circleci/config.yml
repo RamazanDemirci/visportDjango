@@ -15,13 +15,6 @@ jobs:
       - run: sudo chown -R circleci:circleci /usr/local/lib/python3.8/site-packages
       - run: sudo rm -rf /home/circleci/project/
 
-
-      # - restore_cache:  # ensure this step occurs *before* installing dependencies
-          # key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      
-      - restore_cache:  # ensure this step occurs *before* installing dependencies
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-
       - checkout
 
       - run:
@@ -33,7 +26,6 @@ jobs:
        - save_cache:
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
-            - ".venv"
             - "/usr/local/bin"
             - "/usr/local/lib/python3.8/site-packages"
 
