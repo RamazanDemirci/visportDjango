@@ -22,6 +22,7 @@ jobs:
           command: |
             sudo pip install pipenv
             pip install -r requirements.txt
+            pipenv shell
             
       - run:
           command: (coverage run manage.py test football)
